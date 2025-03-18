@@ -2,6 +2,7 @@ ARG BASEIMAGE
 FROM ${BASEIMAGE}
 
 ARG htopversion=3.3.0
+ARG ncurses_version=6.5
 ARG ARCH=amd64
 ARG PARALLEL=4
 ARG CHECKSUM=a69acf9b42ff592c4861010fce7d8006805f0d6ef0e8ee647a6ee6e59b743d5c
@@ -11,8 +12,10 @@ RUN echo "builduser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER builduser
 
-RUN git clone https://github.com/mirror/ncurses.git && \
-    pushd ncurses && \
+
+RUN wget https://invisible-island.net/archives/ncurses/ncurses-${ncurses_version}.tar.gz && \
+    tar zxf ncurses-${ncurses_version}.tar.gz && \
+    pushd ncurses-${ncurses_version} && \
     ./configure --without-database --with-fallbacks=screen-256color,xterm-256color,xterm,vt100 --without-xterm-new --disable-home-terminfo --with-termlib --enable-termcap --disable-database --host=arm-linux-gnue --enable-pc-files --enable-widec && \
     make -j${PARALLEL} && \
     sudo apk del ncurses ncurses-dev && \
