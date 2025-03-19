@@ -22,7 +22,7 @@ RUN wget http://invisible-mirror.net/archives/ncurses/ncurses-${ncurses_version}
     sudo apk del ncurses ncurses-dev && \
     popd
 
-RUN wget ftp://ftp.gnu.org/gnu/readline/readline-${readline_version}.tar.gz && \
+RUN wget https://ftp.gnu.org/gnu/readline/readline-${readline_version}.tar.gz && \
     tar xzvf readline-${readline_version}.tar.gz && \
     pushd readline-${readline_version} && \
     CC='/usr/bin/gcc -static' CFLAGS='-fPIC' ./configure --disable-shared --enable-static && \
